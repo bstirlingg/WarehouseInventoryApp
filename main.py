@@ -1,16 +1,34 @@
-# This is a sample Python script.
+import tkinter as tk
+from InventoryManagement import InventoryManager
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+class WarehouseApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Warehouse Management System")
+        self.geometry("600x400")
+        self.inventory_manager = InventoryManager()
+        self.create_widgets()
 
+    def create_widgets(self):
+        # Example: Add section
+        tk.Label(self, text="Add Section").pack()
+        self.section_entry = tk.Entry(self)
+        self.section_entry.pack()
+        tk.Button(self, text="Add Section", command=self.add_section).pack()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+        # Inventory overview
+        self.inventory_text = tk.Text(self, height=10, width=50)
+        self.inventory_text.pack()
 
+    def add_section(self):
+        section_name = self.section_entry.get()
+        self.inventory_manager.add_section(section_name)
+        self.update_inventory()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    def update_inventory(self):
+        self.inventory_text.delete(1.0, tk.END)
+        self.inventory_text.insert(tk.END, self.inventory_manager.get_inventory_overview())
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    app = WarehouseApp()
+    app.mainloop()
