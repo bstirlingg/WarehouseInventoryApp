@@ -1,72 +1,83 @@
-import tkinter as tk
+import customtkinter as ctk
 from InventoryManagement import InventoryManager
 
-class WarehouseApp(tk.Tk):
+class WarehouseApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Warehouse Management System")
-        self.geometry("800x600")
+        self.geometry("900x700")
         self.inventory_manager = InventoryManager()
         self.create_widgets()
 
     def create_widgets(self):
+        # Configure grid layout
+        self.grid_columnconfigure((0, 1, 2), weight=1)
+        self.grid_rowconfigure(15, weight=1)
+
         # Add Section
-        tk.Label(self, text="Add Section").grid(row=0, column=0, padx=5, pady=5)
-        self.section_entry = tk.Entry(self)
-        self.section_entry.grid(row=0, column=1, padx=5, pady=5)
-        tk.Button(self, text="Add Section", command=self.add_section).grid(row=0, column=2, padx=5, pady=5)
+        section_label = ctk.CTkLabel(self, text="Add Section", font=("Helvetica", 16))
+        section_label.grid(row=0, column=0, padx=10, pady=10)
+
+        self.section_entry = ctk.CTkEntry(self, placeholder_text="Enter section name")
+        self.section_entry.grid(row=0, column=1, padx=10, pady=10)
+
+        add_section_button = ctk.CTkButton(self, text="Add Section", command=self.add_section)
+        add_section_button.grid(row=0, column=2, padx=10, pady=10)
 
         # Add Item
-        tk.Label(self, text="Item Name").grid(row=1, column=0, padx=5, pady=5)
-        self.item_name_entry = tk.Entry(self)
-        self.item_name_entry.grid(row=1, column=1, padx=5, pady=5)
+        item_label = ctk.CTkLabel(self, text="Add Item", font=("Helvetica", 16))
+        item_label.grid(row=1, column=0, padx=10, pady=10)
 
-        tk.Label(self, text="Quantity").grid(row=2, column=0, padx=5, pady=5)
-        self.item_quantity_entry = tk.Entry(self)
-        self.item_quantity_entry.grid(row=2, column=1, padx=5, pady=5)
+        self.item_name_entry = ctk.CTkEntry(self, placeholder_text="Item Name")
+        self.item_name_entry.grid(row=2, column=0, padx=10, pady=10)
 
-        tk.Label(self, text="Expiry Date (optional)").grid(row=3, column=0, padx=5, pady=5)
-        self.item_expiry_entry = tk.Entry(self)
-        self.item_expiry_entry.grid(row=3, column=1, padx=5, pady=5)
+        self.item_quantity_entry = ctk.CTkEntry(self, placeholder_text="Quantity")
+        self.item_quantity_entry.grid(row=2, column=1, padx=10, pady=10)
 
-        tk.Button(self, text="Add Item", command=self.add_item).grid(row=4, column=0, columnspan=2, padx=5, pady=5)
+        self.item_expiry_entry = ctk.CTkEntry(self, placeholder_text="Expiry Date (optional)")
+        self.item_expiry_entry.grid(row=2, column=2, padx=10, pady=10)
+
+        add_item_button = ctk.CTkButton(self, text="Add Item", command=self.add_item)
+        add_item_button.grid(row=3, column=0, columnspan=3, pady=10)
 
         # Manage Stock
-        tk.Label(self, text="Manage Stock").grid(row=5, column=0, padx=5, pady=5)
-        tk.Label(self, text="Item Name").grid(row=6, column=0, padx=5, pady=5)
-        self.stock_item_name_entry = tk.Entry(self)
-        self.stock_item_name_entry.grid(row=6, column=1, padx=5, pady=5)
+        stock_label = ctk.CTkLabel(self, text="Manage Stock", font=("Helvetica", 16))
+        stock_label.grid(row=4, column=0, padx=10, pady=10)
 
-        tk.Label(self, text="Quantity").grid(row=7, column=0, padx=5, pady=5)
-        self.stock_quantity_entry = tk.Entry(self)
-        self.stock_quantity_entry.grid(row=7, column=1, padx=5, pady=5)
+        self.stock_item_name_entry = ctk.CTkEntry(self, placeholder_text="Item Name")
+        self.stock_item_name_entry.grid(row=5, column=0, padx=10, pady=10)
 
-        tk.Button(self, text="Add Stock", command=self.add_stock).grid(row=8, column=0, padx=5, pady=5)
-        tk.Button(self, text="Remove Stock", command=self.remove_stock).grid(row=8, column=1, padx=5, pady=5)
+        self.stock_quantity_entry = ctk.CTkEntry(self, placeholder_text="Quantity")
+        self.stock_quantity_entry.grid(row=5, column=1, padx=10, pady=10)
+
+        add_stock_button = ctk.CTkButton(self, text="Add Stock", command=self.add_stock)
+        add_stock_button.grid(row=6, column=0, padx=10, pady=10)
+
+        remove_stock_button = ctk.CTkButton(self, text="Remove Stock", command=self.remove_stock)
+        remove_stock_button.grid(row=6, column=1, padx=10, pady=10)
 
         # Move Item
-        tk.Label(self, text="Move Item").grid(row=9, column=0, padx=5, pady=5)
-        tk.Label(self, text="From Section").grid(row=10, column=0, padx=5, pady=5)
-        self.from_section_entry = tk.Entry(self)
-        self.from_section_entry.grid(row=10, column=1, padx=5, pady=5)
+        move_label = ctk.CTkLabel(self, text="Move Item", font=("Helvetica", 16))
+        move_label.grid(row=7, column=0, padx=10, pady=10)
 
-        tk.Label(self, text="To Section").grid(row=11, column=0, padx=5, pady=5)
-        self.to_section_entry = tk.Entry(self)
-        self.to_section_entry.grid(row=11, column=1, padx=5, pady=5)
+        self.from_section_entry = ctk.CTkEntry(self, placeholder_text="From Section")
+        self.from_section_entry.grid(row=8, column=0, padx=10, pady=10)
 
-        tk.Label(self, text="Item Name").grid(row=12, column=0, padx=5, pady=5)
-        self.move_item_name_entry = tk.Entry(self)
-        self.move_item_name_entry.grid(row=12, column=1, padx=5, pady=5)
+        self.to_section_entry = ctk.CTkEntry(self, placeholder_text="To Section")
+        self.to_section_entry.grid(row=8, column=1, padx=10, pady=10)
 
-        tk.Label(self, text="Quantity").grid(row=13, column=0, padx=5, pady=5)
-        self.move_quantity_entry = tk.Entry(self)
-        self.move_quantity_entry.grid(row=13, column=1, padx=5, pady=5)
+        self.move_item_name_entry = ctk.CTkEntry(self, placeholder_text="Item Name")
+        self.move_item_name_entry.grid(row=8, column=2, padx=10, pady=10)
 
-        tk.Button(self, text="Move Item", command=self.move_item).grid(row=14, column=0, columnspan=2, padx=5, pady=5)
+        self.move_quantity_entry = ctk.CTkEntry(self, placeholder_text="Quantity")
+        self.move_quantity_entry.grid(row=9, column=0, padx=10, pady=10)
+
+        move_item_button = ctk.CTkButton(self, text="Move Item", command=self.move_item)
+        move_item_button.grid(row=9, column=1, columnspan=2, pady=10)
 
         # Inventory Overview
-        self.inventory_text = tk.Text(self, height=15, width=70)
-        self.inventory_text.grid(row=15, column=0, columnspan=3, padx=5, pady=5)
+        self.inventory_text = ctk.CTkTextbox(self, width=600, height=300)
+        self.inventory_text.grid(row=10, column=0, columnspan=3, padx=10, pady=10)
 
     # Add Section
     def add_section(self):
@@ -125,8 +136,8 @@ class WarehouseApp(tk.Tk):
 
     # Update Inventory Display
     def update_inventory(self):
-        self.inventory_text.delete(1.0, tk.END)
-        self.inventory_text.insert(tk.END, self.inventory_manager.get_inventory_overview())
+        self.inventory_text.delete("0.0", "end")
+        self.inventory_text.insert("0.0", self.inventory_manager.get_inventory_overview())
 
 
 if __name__ == "__main__":
