@@ -5,18 +5,28 @@ class InventoryManager:
         self.sections = {}
 
     def add_section(self, name):
-        if name not in self.sections:
-            self.sections[name] = InventorySection(name)
+        """Add a new section to the inventory if it doesn't already exist."""
+        # Validate that the section name is not empty or whitespace-only
+        if not name.strip():
+            raise ValueError("Section name cannot be empty.")
+        # Check for duplicate section names
+        if name in self.sections:
+            raise ValueError(f"Section '{name}' already exists.")
+        # Add the new section to the inventory
+        self.sections[name] = InventorySection(name)
 
     def get_section(self, name):
         return self.sections.get(name)
 
     def add_item(self, section_name, name, amount, expiry_date=None):
+        """Add an item to a section, raising an error for invalid inputs."""
+        if amount < 0:  # Validate that the amount is non-negative
+            raise ValueError("Quantity cannot be negative.")
         section = self.get_section(section_name)
         if section:
             section.add_stock(name, amount, expiry_date)
         else:
-            raise ValueError("Section not found")
+            raise ValueError(f"Section '{section_name}' not found.")
 
     def remove_item(self, section_name, name, amount):
         section = self.get_section(section_name)
